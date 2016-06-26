@@ -34,11 +34,23 @@ export default class Builder extends WorkerCreep {
                 creep.moveTo(targets[0]);
             }
         } else {
-            const damaged = creep.room.find<Structure>(FIND_STRUCTURES, {
-                filter: (structure) => structure.hits < structure.hitsMax
+            const damaged = creep.room.find<Structure>(FIND_STRUCTURES,
+            {
+                filter: (structure) => structure.hits < structure.hitsMax && structure.structureType !== STRUCTURE_WALL
             });
-            if (creep.repair(damaged[0]) === ERR_NOT_IN_RANGE) {
-                creep.moveTo(damaged[0]);
+            if (damaged.length > 0) {
+                if (creep.repair(damaged[0]) === ERR_NOT_IN_RANGE) {
+                    creep.moveTo(damaged[0]);
+                }
+            } else {
+                let walls = creep.room.find<Structure>(FIND_STRUCTURES,
+                {
+                    filter: (structure) => structure.hits < structure.hitsMax && structure.structureType === STRUCTURE_WALL
+                });
+                walls = walls.sort((first, second) => first.hits - second.hits);
+                if (creep.repair(walls[0]) === ERR_NOT_IN_RANGE) {
+                    creep.moveTo(walls[0]);
+                }
             }
         }
     }
