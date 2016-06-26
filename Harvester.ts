@@ -23,9 +23,17 @@ export default class Harvester extends WorkerCreep {
                 }
             });
         if (targets.length > 0) {
-            if (creep.transfer(targets[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-                creep.moveTo(targets[0]);
+            for (let target of targets) {
+                const outcome = creep.transfer(target, RESOURCE_ENERGY);
+                console.log(outcome);
+                if (outcome === ERR_NOT_IN_RANGE) {
+                    creep.moveTo(target);
+                    return;
+                }
+                if (outcome === OK) return;
             }
+        } else {
+            creep.moveTo(Game.spawns[Settings.mainSpawner]);
         }
     }
 }
