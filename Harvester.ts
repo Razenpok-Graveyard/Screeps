@@ -9,10 +9,16 @@ export default class Harvester extends WorkerCreep {
 
     expendEnergy() {
         const creep = this.creep;
+        const structures = [
+            STRUCTURE_SPAWN,
+            STRUCTURE_EXTENSION,
+            STRUCTURE_TOWER,
+            STRUCTURE_CONTAINER
+        ];
         const targets = creep.room.find<Structure>(FIND_STRUCTURES,
             {
                 filter: (structure) => {
-                    return (structure.structureType === STRUCTURE_EXTENSION || structure.structureType === STRUCTURE_SPAWN) &&
+                    return (structures.indexOf(structure.structureType) > -1) &&
                         structure.energy < structure.energyCapacity;
                 }
             });
