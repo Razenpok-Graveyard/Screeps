@@ -26,7 +26,7 @@ abstract class WorkerCreep extends SmartCreep {
         this.creep.memory.expendingEnergy = value;
     }
 
-    private gatherEnergy(): void {
+    protected gatherEnergy(): void {
         const creep = this.creep;
         const sources = creep.room.find<Source>(FIND_SOURCES);
         if (creep.harvest(sources[0]) === ERR_NOT_IN_RANGE) {
