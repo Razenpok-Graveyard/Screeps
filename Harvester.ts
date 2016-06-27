@@ -1,5 +1,6 @@
 ﻿import WorkerCreep from "./WorkerCreep";
 import Settings from "./Settings";
+import GameController from "./GameController";
 
 export default class Harvester extends WorkerCreep {
 
@@ -22,6 +23,7 @@ export default class Harvester extends WorkerCreep {
                         structure.energy < structure.energyCapacity;
                 }
             });
+
         if (targets.length > 0) {
             for (let target of targets) {
                 const outcome = creep.transfer(target, RESOURCE_ENERGY);
@@ -33,7 +35,7 @@ export default class Harvester extends WorkerCreep {
                 if (outcome === OK) return;
             }
         } else {
-            creep.moveTo(Game.spawns[Settings.mainSpawner]);
+            creep.moveTo(GameController.MainSpawn);
         }
     }
 }
