@@ -17,25 +17,31 @@ export default class GameController {
             }
         }
 
-        const spawn = Game.spawns[Settings.mainSpawner];
+        var spawn: Spawn;
+        for (let i in Game.spawns) {
+            if (spawn != null) break;
+            spawn = Game.spawns[i];
+        }
+        if (spawn != null) {
+            const harvesters = _.filter(Game.creeps, (creep) => creep.memory.type === SmartCreepType.Harvester);
+            if (harvesters.length < 2 && !spawn.spawning) {
+                const newName = spawn.createCreep([WORK, WORK, CARRY, MOVE], undefined, { type: SmartCreepType.Harvester });
+                console.log(`Spawning new harvester: ${newName}`);
+            }
 
-        const harvesters = _.filter(Game.creeps, (creep) => creep.memory.type === SmartCreepType.Harvester);
-        if (harvesters.length < 2 && !spawn.spawning) {
-            const newName = spawn.createCreep([WORK, CARRY, MOVE], undefined, { type: SmartCreepType.Harvester });
-            console.log(`Spawning new harvester: ${newName}`);
+            const upgraders = _.filter(Game.creeps, (creep) => creep.memory.type === SmartCreepType.Upgrader);
+            if (upgraders.length < 2 && !spawn.spawning) {
+                const newName = spawn.createCreep([WORK, WORK, CARRY, MOVE], undefined, { type: SmartCreepType.Upgrader });
+                console.log(`Spawning new upgrader: ${newName}`);
+            }
+
+            const builders = _.filter(Game.creeps, (creep) => creep.memory.type === SmartCreepType.Builder);
+            if (builders.length < 2 && !spawn.spawning) {
+                const newName = spawn.createCreep([WORK, WORK, CARRY, MOVE], undefined, { type: SmartCreepType.Builder });
+                console.log(`Spawning new builder: ${newName}`);
+            }
         }
 
-        const upgraders = _.filter(Game.creeps, (creep) => creep.memory.type === SmartCreepType.Upgrader);
-        if (upgraders.length < 2 && !spawn.spawning) {
-            const newName = spawn.createCreep([WORK, CARRY, MOVE], undefined, { type: SmartCreepType.Upgrader });
-            console.log(`Spawning new upgrader: ${newName}`);
-        }
-
-        const builders = _.filter(Game.creeps, (creep) => creep.memory.type === SmartCreepType.Builder);
-        if (builders.length < 2 && !spawn.spawning) {
-            const newName = spawn.createCreep([WORK, CARRY, MOVE], undefined, { type: SmartCreepType.Builder });
-            console.log(`Spawning new builder: ${newName}`);
-        }
 
         for (let name in Game.creeps) {
             if (Game.creeps.hasOwnProperty(name)) {
