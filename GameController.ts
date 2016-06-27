@@ -4,7 +4,6 @@ import SmartCreepType from "./SmartCreepType";
 
 export default class GameController {
 
-    static MainSpawn: Spawn;
 
     static initialize() {
     }
@@ -20,10 +19,10 @@ export default class GameController {
         }
 
         for (let i in Game.spawns) {
-            if (GameController.MainSpawn != null) break;
-            GameController.MainSpawn = Game.spawns[i];
+            if (Settings.MainSpawn != null) break;
+            Settings.MainSpawn = Game.spawns[i];
         }
-        const spawn = GameController.MainSpawn;
+        const spawn = Settings.MainSpawn;
         if (spawn != null) {
             let spawning = false;
             const harvesters = _.filter(Game.creeps, (creep) => creep.memory.type === SmartCreepType.Harvester);

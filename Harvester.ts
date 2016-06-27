@@ -1,6 +1,5 @@
 ﻿import WorkerCreep from "./WorkerCreep";
 import Settings from "./Settings";
-import GameController from "./GameController";
 
 export default class Harvester extends WorkerCreep {
 
@@ -35,7 +34,7 @@ export default class Harvester extends WorkerCreep {
                 if (outcome === OK) return;
             }
         } else {
-            creep.moveTo(GameController.MainSpawn);
+            creep.moveTo(Settings.MainSpawn);
         }
     }
 }
