@@ -18,27 +18,30 @@ export default class GameController {
                 }
             }
         }
-        
+
         for (let i in Game.spawns) {
             if (GameController.MainSpawn != null) break;
             GameController.MainSpawn = Game.spawns[i];
         }
         const spawn = GameController.MainSpawn;
         if (spawn != null) {
+            let spawning = false;
             const harvesters = _.filter(Game.creeps, (creep) => creep.memory.type === SmartCreepType.Harvester);
-            if (harvesters.length < 2 && !spawn.spawning) {
+            if (harvesters.length < 2) {
                 const newName = spawn.createCreep([WORK, WORK, CARRY, MOVE], undefined, { type: SmartCreepType.Harvester });
                 console.log(`Spawning new harvester: ${newName}`);
+                spawning = true;
             }
 
             const upgraders = _.filter(Game.creeps, (creep) => creep.memory.type === SmartCreepType.Upgrader);
-            if (upgraders.length < 2 && !spawn.spawning) {
+            if (upgraders.length < 2 && !spawning) {
                 const newName = spawn.createCreep([WORK, WORK, CARRY, MOVE], undefined, { type: SmartCreepType.Upgrader });
                 console.log(`Spawning new upgrader: ${newName}`);
+                spawning = true;
             }
 
             const builders = _.filter(Game.creeps, (creep) => creep.memory.type === SmartCreepType.Builder);
-            if (builders.length < 2 && !spawn.spawning) {
+            if (builders.length < 2 && !spawning) {
                 const newName = spawn.createCreep([WORK, WORK, CARRY, MOVE], undefined, { type: SmartCreepType.Builder });
                 console.log(`Spawning new builder: ${newName}`);
             }
