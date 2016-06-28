@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Builder.ts" />
+    <TypeScriptCompile Include="Town.ts" />
     <TypeScriptCompile Include="WorkerCreep.ts" />
     <TypeScriptCompile Include="References\lodash.d.ts" />
     <TypeScriptCompile Include="References\stuff.d.ts" />
@@ -36,6 +37,9 @@
     <TypeScriptCompile Include="SmartCreep.ts" />
     <TypeScriptCompile Include="SmartCreepType.ts" />
     <TypeScriptCompile Include="Upgrader.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="gulpfile.js" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

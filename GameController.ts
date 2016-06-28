@@ -1,6 +1,6 @@
 ﻿import SmartCreepFactory from "./SmartCreepFactory";
 import Settings from "./Settings";
-import SmartCreepType from "./SmartCreepType";
+import Town from "./Town";
 
 export default class GameController {
 
@@ -18,40 +18,11 @@ export default class GameController {
             }
         }
 
-        for (let i in Game.spawns) {
-            if (Settings.MainSpawn != null) break;
-            Settings.MainSpawn = Game.spawns[i];
-        }
-        const spawn = Settings.MainSpawn;
-        if (spawn != null) {
-            let spawning = false;
-            const harvesters = _.filter(Game.creeps, (creep) => creep.memory.type === SmartCreepType.Harvester);
-            if (harvesters.length < 2) {
-                const newName = spawn.createCreep([WORK, WORK, CARRY, MOVE], undefined, { type: SmartCreepType.Harvester });
-                console.log(`Spawning new harvester: ${newName}`);
-                spawning = true;
-            }
-
-            const upgraders = _.filter(Game.creeps, (creep) => creep.memory.type === SmartCreepType.Upgrader);
-            if (upgraders.length < 2 && !spawning) {
-                const newName = spawn.createCreep([WORK, WORK, CARRY, MOVE], undefined, { type: SmartCreepType.Upgrader });
-                console.log(`Spawning new upgrader: ${newName}`);
-                spawning = true;
-            }
-
-            const builders = _.filter(Game.creeps, (creep) => creep.memory.type === SmartCreepType.Builder);
-            if (builders.length < 2 && !spawning) {
-                const newName = spawn.createCreep([WORK, WORK, CARRY, MOVE], undefined, { type: SmartCreepType.Builder });
-                console.log(`Spawning new builder: ${newName}`);
-            }
-        }
-
-
-        for (let name in Game.creeps) {
-            if (Game.creeps.hasOwnProperty(name)) {
-                const gameCreep = Game.creeps[name];
-                const creep = SmartCreepFactory.create(gameCreep);
-                creep.processTick();
+        for (let roomName in _.filter(Game.rooms)) {
+            if (Game.rooms.hasOwnProperty(roomName)) {
+                const room = Game.rooms[roomName];
+                const town = new Town(room);
+                town.tick();
             }
         }
     }
